@@ -1,0 +1,40 @@
+diff --git a/elf/dl-init.c b/elf/dl-init.c
+index 28a6ff6..5ff6fae 100644
+--- a/elf/dl-init.c
++++ b/elf/dl-init.c
+@@ -75,7 +75,14 @@ call_init (struct link_map *l, int argc, char **argv, char **env)
+ 
+       addrs = (ElfW(Addr) *) (init_array->d_un.d_ptr + l->l_addr);
+       for (j = 0; j < jm; ++j)
++      {
++      if(!addrs[j])
++      {
++          _dl_debug_printf("\nskipping 0 init_array function\n");
++          continue;
++      }
+ 	((init_t) addrs[j]) (argc, argv, env);
++      }
+     }
+ }
+ 
+diff --git a/elf/dl-load.c b/elf/dl-load.c
+index cad6184..122f232 100644
+--- a/elf/dl-load.c
++++ b/elf/dl-load.c
+@@ -2118,6 +2118,7 @@ open_verify (const char *name, struct filebuf *fbp, struct link_map *loader,
+ 	    break;
+ 	  }
+     }
++      /*
+       if (-1 != fd)
+ 	{
+ 	  int error = arch_specific_checks(fd, name, ehdr);
+@@ -2130,7 +2131,7 @@ open_verify (const char *name, struct filebuf *fbp, struct link_map *loader,
+ 	      errstring = N_("Unable to run arch-specific checks\n");
+ 	      goto call_lose;
+ 	    }
+-	}
++	}*/
+ 
+     }
+ 

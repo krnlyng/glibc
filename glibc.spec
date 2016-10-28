@@ -47,6 +47,7 @@ Patch11: eglibc-2.15-fix-neon-libdl.patch
 Patch12: eglibc-2.19-shlib-make.patch
 # eglibc-2.19-sb2-workaround.patch: fix build fail
 Patch13: eglibc-2.19-sb2-workaround.patch
+Patch14: test.patch
 
 Provides: ldconfig
 # The dynamic linker supports DT_GNU_HASH
@@ -239,6 +240,7 @@ QUILT_PATCHES=debian/patches quilt push -a
 %patch12 -p1
 # eglibc-2.19-sb2-workaround.patch
 %patch13 -p1
+%patch14 -p1
 
 cat > find_provides.sh <<EOF
 #!/bin/sh
